@@ -1,5 +1,3 @@
-// src/app/repositories/order/createOrderRepo.ts
-
 import { prisma } from '@/infra/db/cliente'
 import type { Prisma } from '../../../generated/prisma'
 
