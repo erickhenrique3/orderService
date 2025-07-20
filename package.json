@@ -1,0 +1,26 @@
+{
+  "name": "orderService",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/infra/http/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "dependencies": {
+    "@prisma/client": "^6.12.0",
+    "dotenv": "^17.2.0",
+    "fastify": "^5.4.0",
+    "kafkajs": "^2.2.4",
+    "zod": "^4.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.15",
+    "prisma": "^6.12.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
