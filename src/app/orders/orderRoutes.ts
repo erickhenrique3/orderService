@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { z } from 'zod'
 import { createOrderRepo } from './orderRepository'
+import { z } from 'zod'
 
 export async function orderRoutes(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -12,16 +12,14 @@ export async function orderRoutes(app: FastifyInstance) {
         tags: ['orders'],
         body: z.object({
           customerId: z.number().int().positive(),
+          products: z.array(
+            z.object({
+              productId: z.number().int().positive(),
+              quantity: z.number().int().positive(),
+              price: z.number().positive(),
+            })
+          ).min(1, 'Informe pelo menos 1 produto'),
           total: z.number().positive(),
-          products: z
-            .array(
-              z.object({
-                productId: z.number().int().positive(),
-                quantity: z.number().int().positive(),
-                price: z.number().positive(),
-              })
-            )
-            .min(1),
         }),
         response: {
           201: z.object({
@@ -31,15 +29,8 @@ export async function orderRoutes(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      const { customerId, total, products } = request.body
-
-      const order = await createOrderRepo({
-        customerId,
-        total,
-        products,
-      })
-
-      
+      const { customerId, products, total } = request.body
+      const order = await createOrderRepo({ customerId, total, products })
 
       return reply.status(201).send({ orderId: order.id })
     }
