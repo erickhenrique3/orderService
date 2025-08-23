@@ -1,5 +1,5 @@
 import { prisma } from '@/infra/db/cliente'
-import type { Prisma } from '../../../generated/prisma'
+import { Prisma } from '@prisma/client';
 
 type CreateOrderInput = {
   customerId: number
