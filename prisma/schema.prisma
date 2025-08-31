@@ -7,10 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+}
+
 model Order {
   id          Int          @id @default(autoincrement())
   customerId  Int
   total       Float
+  status      OrderStatus  @default(PENDING)
   createdAt   DateTime     @default(now())
   items       OrderItem[]
 }

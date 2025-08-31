@@ -4,6 +4,7 @@ import { Prisma } from '@prisma/client';
 type CreateOrderInput = {
   customerId: number
   total: number
+  status?: string
   products: Array<{
     productId: number
     quantity: number

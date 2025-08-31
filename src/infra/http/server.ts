@@ -11,6 +11,8 @@ import fastifyCors from "@fastify/cors";
 
 const server = fastify();
 
+import { startKafka } from '../../infra/kafka/producer'
+
 server.register(fastifyCors, {
   origin: "*",
 });
@@ -44,10 +46,15 @@ server.get('/', async () => {
   return { message: 'Hello from Fastify!' }
 });
 
-server.listen({ port: 3000, host: '0.0.0.0' }, (err, address) => {
-  if (err) {
-    console.log(err);
-    process.exit(1);
+const start = async () => {
+  try {
+    await startKafka()
+    await server.listen({ port: 3000, host: '0.0.0.0' })
+    console.log(`🚀 Server running on http://localhost:3000`)
+  } catch (err) {
+    console.error(err)
+    process.exit(1)
   }
-  console.log('Server running at ${address}');
-});
+}
+
+start()

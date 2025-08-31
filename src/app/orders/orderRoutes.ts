@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { createOrderRepo } from './orderRepository'
+import { createOrderService } from './orderService'
 import { z } from 'zod'
 
 export async function orderRoutes(app: FastifyInstance) {
@@ -30,7 +30,7 @@ export async function orderRoutes(app: FastifyInstance) {
     },
     async (request, reply) => {
       const { customerId, products, total } = request.body
-      const order = await createOrderRepo({ customerId, total, products })
+      const order = await createOrderService({ customerId, total, products })
 
       return reply.status(201).send({ orderId: order.id })
     }

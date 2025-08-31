@@ -1,4 +1,4 @@
-import { producer } from '../../infra/kafka/producter'
+import { producer } from '../../infra/kafka/producer'
 
 export async function publishOrderCreated(evt: {
   orderId: number
