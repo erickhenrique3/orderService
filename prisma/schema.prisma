@@ -13,6 +13,14 @@ enum OrderStatus {
   FAILED
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  orders    Order[]
+}
+
 model Order {
   id          Int          @id @default(autoincrement())
   customerId  Int
@@ -20,6 +28,7 @@ model Order {
   status      OrderStatus  @default(PENDING)
   createdAt   DateTime     @default(now())
   items       OrderItem[]
+  user        User         @relation(fields: [customerId], references: [id])
 }
 
 model OrderItem {

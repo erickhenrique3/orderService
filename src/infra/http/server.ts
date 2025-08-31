@@ -9,44 +9,41 @@ import {
 } from "fastify-type-provider-zod";
 import fastifyCors from "@fastify/cors";
 
-const server = fastify();
-
 import { startKafka } from '../../infra/kafka/producer'
+import registerPlugins from './pluglins';
+import registerAuthenticate from '../middlewares/authenticate';
 
-server.register(fastifyCors, {
-  origin: "*",
-});
+async function main() {
+  const server = fastify();
 
-server.register(fastifySwagger, {
-  swagger: {
-    consumes: ["application/json"],
-    produces: ["application/json"],
-    
-    info: {
-      title: "Order Service",
-      description: "Documentação oficial da API do pass-in",
-      version: "1.0.0",
+  server.register(fastifyCors, { origin: "*" });
+
+  server.register(fastifySwagger, {
+    swagger: {
+      consumes: ["application/json"],
+      produces: ["application/json"],
+      info: {
+        title: "Order Service",
+        description: "Documentação oficial da API do pass-in",
+        version: "1.0.0",
+      },
     },
-  },
+    transform: jsonSchemaTransform,
+  });
 
-  transform: jsonSchemaTransform,
-})
+  server.register(fastifySwaggerUI, { routePrefix: "/docs" });
 
-server.register(fastifySwaggerUI, {
-  routePrefix: "/docs",
-});
+  server.setValidatorCompiler(validatorCompiler);
+  server.setSerializerCompiler(serializerCompiler);
 
+  await registerPlugins(server)
+  await registerAuthenticate(server)
+  await registerAppModules(server)
 
-server.setValidatorCompiler(validatorCompiler);
-server.setSerializerCompiler(serializerCompiler);
+  server.get('/', async () => {
+    return { message: 'Hello from Fastify!' }
+  });
 
-registerAppModules(server)
-
-server.get('/', async () => {
-  return { message: 'Hello from Fastify!' }
-});
-
-const start = async () => {
   try {
     await startKafka()
     await server.listen({ port: 3000, host: '0.0.0.0' })
@@ -57,4 +54,4 @@ const start = async () => {
   }
 }
 
-start()
+main()
