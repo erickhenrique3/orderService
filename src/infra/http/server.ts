@@ -12,6 +12,7 @@ import fastifyCors from "@fastify/cors";
 import { startKafka } from '../../infra/kafka/producer'
 import registerPlugins from './pluglins';
 import registerAuthenticate from '../middlewares/authenticate';
+import { errorHandler } from '../errors/errorHandler';
 
 async function main() {
   const server = fastify();
@@ -35,6 +36,7 @@ async function main() {
 
   server.setValidatorCompiler(validatorCompiler);
   server.setSerializerCompiler(serializerCompiler);
+  server.setErrorHandler(errorHandler)
 
   await registerPlugins(server)
   await registerAuthenticate(server)

@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { createOrderService } from './orderService'
+import { createOrderService } from '../../orders/orderService'
 import { z } from 'zod'
 
 const productSchema = z.object({
@@ -18,7 +18,7 @@ const createOrderResponseSchema = z.object({
   orderId: z.number(),
 })
 
-export async function orderRoutes(app: FastifyInstance) {
+export async function createOrderRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     '/orders',
     {

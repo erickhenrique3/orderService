@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { userService } from './userService'
+import { userService } from '../../users/userService'
 import { z } from 'zod'
 
 // Schemas para registro e login
