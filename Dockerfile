@@ -12,11 +12,8 @@ RUN pnpm install --frozen-lockfile
 # Copia o restante do código (src, prisma, etc)
 COPY . .
 
-# Gera client Prisma (se usa Prisma)
-RUN npx prisma generate
-
 # Expõe a porta da aplicação
 EXPOSE 3000
 
 # Comando para rodar seu app
-CMD ["pnpm", "run", "dev"]
+CMD ["pnpm", "run", "start:docker"]

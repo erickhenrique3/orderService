@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
-import { userRoutes } from './Routes/userRoutes/userRoutes'
-import { orderRoutes } from './Routes/orderRoutes'
+import { userRoutes } from './routes/userRoutes/userRoutes'
+import { orderRoutes } from './routes/orderRoutes'
 
 export async function registerAppModules(app: FastifyInstance) {
   await app.register(userRoutes)

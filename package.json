@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/infra/http/server.ts"
+    "dev": "tsx watch src/infra/http/server.ts",
+    "generate": "prisma generate",
+    "migrate:deploy": "prisma migrate deploy",
+    "start:docker": "pnpm run generate && pnpm run migrate:deploy && pnpm run dev"
   },
   "keywords": [],
   "author": "",
