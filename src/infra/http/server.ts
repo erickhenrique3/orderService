@@ -21,11 +21,9 @@ async function main() {
 
   server.register(fastifySwagger, {
     swagger: {
-      consumes: ["application/json"],
-      produces: ["application/json"],
       info: {
-        title: "Order Service",
-        description: "Documentação oficial da API do pass-in",
+        title: "Order Service API",
+        description: "API para gerenciamento de pedidos - Microserviço de Pedidos",
         version: "1.0.0",
       },
     },
